@@ -1,4 +1,5 @@
-# Pre-Process Raw Tobii Exports for VTNet_att for the combined MSNV dataset 
+# Preprocess Raw Tobii Exports for VTNet_att for the combined MSNV dataset 
+# Preprocesses without splitting into tasks 
 
 import pandas as pd 
 import re
@@ -62,58 +63,74 @@ def cnn_preprocess():
 
 def rnn_preprocess():
   directories = [
-        'adaptive-bar/raw_data',
-        'adaptive-link/raw_data',
-        'control/raw_data'
-    ]
-
-  valid_columns = [
-          'GazePointLeftX (ADCSpx)',
-          'GazePointLeftY (ADCSpx)',
-          'CamLeftX',
-          'CamLeftY',
-          'PupilLeft',
-          'DistanceLeft',
-          'ValidityLeft',
-          'GazePointRightX (ADCSpx)',
-          'GazePointRightY (ADCSpx)',
-          'CamRightX',
-          'CamRightY',
-          'PupilRight',
-          'DistanceRight',
-          'ValidityRight'
+          'adaptive-bar/raw_data',
+          'adaptive-link/raw_data',
+          'control/raw_data'
       ]
-  # Iterate through each directory
-  for directory in directories:
-      # Create the corresponding pkl directory if it doesn't exist
-      pkl_dir = os.path.join(os.path.dirname(directory), 'pkl_cyclic_final')
-      if not os.path.exists(pkl_dir):
-          os.makedirs(pkl_dir)
-      else:
-          shutil.rmtree(pkl_dir)
-          os.makedirs(pkl_dir)
   
-      # Iterate through files in the directory
-      for file_name in os.listdir(directory):
-          # Check if the file is a .tsv file
-          if file_name.endswith('.tsv'):
-              # Construct the full file path
-              file_path = os.path.join(directory, file_name)
+  # Columns to keep from each TSV file
+  valid_columns = [
+      'GazePointLeftX (ADCSpx)', 'GazePointLeftY (ADCSpx)',
+      'GazePointRightX (ADCSpx)', 'GazePointRightY (ADCSpx)',
+      'GazePointX (ADCSpx)', 'GazePointY (ADCSpx)', 
+      'GazePointX (MCSpx)', 'GazePointY (MCSpx)',
+      'GazePointLeftX (ADCSmm)', 'GazePointLeftY (ADCSmm)', 
+      'GazePointRightX (ADCSmm)', 'GazePointRightY (ADCSmm)',
+      'DistanceLeft', 'DistanceRight',
+      'PupilLeft', 'PupilRight', 
+      'FixationPointX (MCSpx)', 'FixationPointY (MCSpx)'
+  ]
   
-              # Read the .tsv file into a DataFrame
-              df = pd.read_csv(file_path, sep='\t')
+  # Constants
+  SAMPLING_RATE = 120  # Tobii T120 tracker captures at 120Hz
+  MIN_TIME_SECONDS = 3   # Minimum required duration of data in seconds
+  MIN_FRAMES = SAMPLING_RATE * MIN_TIME_SECONDS  # Minimum frames required
+  CYCLIC_SPLITS = 4  # Number of cyclic splits
   
-              # Select only the valid columns
-              df_selected = df[valid_columns]
+  # Process each file in each directory
+  for dir in directories:
+      output_path = os.path.join(dir, 'final_pkl_cyclic')
+      if not os.path.exists(output_path):
+          os.makedirs(output_path)
   
-              # Create the output file name (same name but with .pkl extension)
-              output_file_name = file_name.replace('.tsv', '.pkl')
-              output_file_path = os.path.join(pkl_dir, output_file_name)
+      print(f"\nProcessing directory: {dir}")
   
-              # Save the selected DataFrame as a .pkl file
-              df_selected.to_pickle(output_file_path)
+      for f in os.listdir(dir):
+          # Process only TSV files; skip others (like existing pickle files)
+          if not f.endswith('.tsv'):
+              print(f"Skipping {f} (not a TSV file)")
+              continue
   
-              print(f"Processed {file_name} and saved to {output_file_path}")
+          f_path = os.path.join(dir, f)
+          try:
+              # Read the TSV file
+              df = pd.read_csv(f_path, sep='\t')
+  
+              # Check if the DataFrame has the minimum required rows
+              if len(df) < MIN_FRAMES:
+                  print(f"Skipping {f} (Less than {MIN_TIME_SECONDS}s of data)")
+                  continue
+  
+              # Check if all valid columns exist in the DataFrame
+              if not set(valid_columns).issubset(df.columns):
+                  print(f"Skipping {f} (missing one or more valid columns)")
+                  continue
+  
+              # Subset the DataFrame to only the valid columns
+              df = df[valid_columns]
+  
+              # Cyclic Splitting and Saving as Pickle Files
+              for i in range(CYCLIC_SPLITS):
+                  split_df = df.iloc[i::CYCLIC_SPLITS].reset_index(drop=True)
+                  output_filename = os.path.join(output_path, f.replace('.tsv', f'_{i+1}.pkl'))
+                  with open(output_filename, 'wb') as handle:
+                      pickle.dump(split_df, handle)
+                  print(f"Saved: {output_filename}")
+  
+          except Exception as e:
+              print(f"Error processing {f}: {e}")
+  
+  print("\n Preprocessing complete!")
 
 def map_name():
   # Map the name of the .pkl files made from the previous functions
