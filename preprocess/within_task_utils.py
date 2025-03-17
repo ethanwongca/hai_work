@@ -276,8 +276,7 @@ def crop_and_scanpath_from_seg(seg_directory, raw_directory, output_directory):
             plt.plot(x, y, linewidth=1)  # line connecting gaze points for saccades
             plt.axis('off')
             for i in range(4):
-            # Build output filename without a cyclic index.
                 output_filename = os.path.join(output_directory, f"{prefix}_{user_id}_{mmd_id}_{i}.png")
                 plt.savefig(output_filename, bbox_inches='tight', pad_inches=0)
-                plt.close()
                 print(f"Saved scanpath image for user {user_id}, seg {seg_id}, mmd_id {mmd_id}, cycle {i}, as {output_filename}")
+            plt.close() 
