@@ -26,6 +26,18 @@ def cyclic_split_df(df, n=4):
     """
     return [df.iloc[i::n].reset_index(drop=True) for i in range(n)]
 
+def extract_seg_id(filename):
+    """
+    Extracts a numeric ID from the filename by capturing digits that occur before the file extension.
+    Works for names like "msnv1.seg", "msnv1.se", or "1.seg".
+    """
+    match = re.search(r'(\d+)(?=\.[^.]+$)', filename)
+    if match:
+        return int(match.group(1))
+    else:
+        return None
+
+
 def crop_and_cyclic_split_from_seg(seg_directory, raw_directory, output_directory):
     """
     For each segmentation file (.seg) in seg_directory, this function:
@@ -35,9 +47,12 @@ def crop_and_cyclic_split_from_seg(seg_directory, raw_directory, output_director
       3. Locates the corresponding raw TSV file for that user in raw_directory.
       4. Uses the rec_start and rec_end values (recording timestamps) to crop the raw data 
          based on its 'RecordingTimestamp' column.
-      5. Restricts the cropped data to only the valid columns.
-      6. Cyclically splits the segment into 4 groups.
-      7. Saves each cyclic group as a pickle file named: 
+      5. Removes invalid rows from the cropped data. In this example, rows are removed if:
+            - Any of the required valid columns contain NaN.
+            - Any of the required valid columns equal -1.
+      6. Restricts the cropped data to only the valid columns.
+      7. Cyclically splits the segment into 4 groups.
+      8. Saves each cyclic group as a pickle file named: 
              {prefix}_{user_id}_{mmd_id}_{i}.pkl
          where prefix is determined by the seg_directory name (e.g., "ctrl" for control).
     
@@ -65,11 +80,12 @@ def crop_and_cyclic_split_from_seg(seg_directory, raw_directory, output_director
     
     # Determine prefix from seg_directory name.
     seg_directory_lower = seg_directory.lower()
-    if 'adaptive-bar' in seg_directory_lower:
+    raw_directory_lower = raw_directory.lower()
+    if 'adaptive-bar' in raw_directory_lower:
         prefix = "bar"
-    elif 'adaptive-link' in seg_directory_lower:
+    elif 'adaptive-link' in raw_directory_lower:
         prefix = "link"
-    elif 'control' in seg_directory_lower:
+    elif 'control' in raw_directory_lower:
         prefix = "ctrl"
     else:
         prefix = "unknown"
@@ -119,12 +135,21 @@ def crop_and_cyclic_split_from_seg(seg_directory, raw_directory, output_director
             rec_end = row['rec_end']
             
             # Crop the raw data based on RecordingTimestamp.
-            # Here we assume the values are numeric.
             segment_df = df_raw[(df_raw['RecordingTimestamp'] >= rec_start) &
                                 (df_raw['RecordingTimestamp'] <= rec_end)].copy()
             
             if segment_df.empty:
                 print(f"No data found for user {user_id}, mmd_id {mmd_id} between {rec_start} and {rec_end}")
+                continue
+            
+            # Remove rows with NaN in valid columns.
+            segment_df = segment_df.dropna(subset=valid_columns)
+            # Remove rows where any required gaze value equals -1.
+            for col in valid_columns:
+                segment_df = segment_df[segment_df[col] != -1]
+            
+            if segment_df.empty:
+                print(f"All rows invalid for user {user_id}, mmd_id {mmd_id} between {rec_start} and {rec_end}")
                 continue
             
             # Restrict to the valid columns.
@@ -143,16 +168,6 @@ def crop_and_cyclic_split_from_seg(seg_directory, raw_directory, output_director
                     pickle.dump(cyclic_df, f)
                 print(f"Saved cyclic segment {i} for user {user_id}, mmd_id {mmd_id} as {output_filename}")
 
-def extract_seg_id(filename):
-    """
-    Extracts a numeric ID from the filename by capturing digits that occur before the file extension.
-    Works for names like "msnv1.seg", "msnv1.se", or "1.seg".
-    """
-    match = re.search(r'(\d+)(?=\.[^.]+$)', filename)
-    if match:
-        return int(match.group(1))
-    else:
-        return None
 
 def crop_and_scanpath_from_seg(seg_directory, raw_directory, output_directory):
     """
@@ -259,54 +274,36 @@ def crop_and_scanpath_from_seg(seg_directory, raw_directory, output_directory):
                 continue
             
             # Compute average gaze coordinates.
-            segment_df['r_GazePointX (ADCSpx)'] = (segment_df['GazePointLeftX (ADCSpx)'] + 
+            segment_df['r_GazePointX (ADCSpx)'] = (segment_df['GazePointLeftX (ADCSpx)'] +
                                                     segment_df['GazePointRightX (ADCSpx)']) / 2
-            segment_df['r_GazePointY (ADCSpx)'] = (segment_df['GazePointLeftY (ADCSpx)'] + 
+            segment_df['r_GazePointY (ADCSpx)'] = (segment_df['GazePointLeftY (ADCSpx)'] +
                                                     segment_df['GazePointRightY (ADCSpx)']) / 2
+            
+            # Drop rows with NaN in the computed gaze points
+            segment_df = segment_df.dropna(subset=['r_GazePointX (ADCSpx)', 'r_GazePointY (ADCSpx)'])
             
             # Extract the computed gaze points.
             x = segment_df['r_GazePointX (ADCSpx)'].values
             y = segment_df['r_GazePointY (ADCSpx)'].values
             if len(x) == 0 or len(y) == 0:
-                print(f"No valid gaze data for user {user_id}, mmd_id {mmd_id}")
+                print(f"No valid gaze data for user {user_id}, mmd_id {mmd_id}. Skipping task.")
                 continue
-            
-            # Generate scanpath image (using the entire task segment).
-            plt.figure()
-            plt.scatter(x, y, s=5)  # scatter for fixations (adjust marker size as needed)
-            plt.plot(x, y, linewidth=1)  # line connecting gaze points for saccades
-            plt.axis('off')
-            for i in range(4):
-                output_filename = os.path.join(output_directory, f"{prefix}_{user_id}_{mmd_id}_{i}.png")
-                plt.savefig(output_filename, bbox_inches='tight', pad_inches=0)
-                print(f"Saved scanpath image for user {user_id}, seg {seg_id}, mmd_id {mmd_id}, cycle {i}, as {output_filename}")
-            plt.close() 
 
-def sort_files_into_folders(df: pd.DataFrame, source_folder: str, destination_folder: str) -> None:
-    # Define label columns and folder structure
-    label_columns = ['Meara_label', 'BarChartLit_label', 'VerbalWM_label']
-    categories = ['high', 'low']
-    file_types = {'pkl': 'pickle_files', 'png': 'images'}
+            # Wrap the plotting/saving in a try/except block to catch any errors (e.g., from np.interp)
+            try:
+                plt.figure()
+                plt.scatter(x, y, s=5)  # scatter for fixations
+                plt.plot(x, y, linewidth=1)  # line connecting gaze points
+                plt.axis('off')
+                
+                # Save the same image four times with different suffixes.
+                for i in range(4):
+                    output_filename = os.path.join(output_directory, f"{prefix}_{user_id}_{mmd_id}_{i}.png")
+                    plt.savefig(output_filename, bbox_inches='tight', pad_inches=0)
+                    print(f"Saved scanpath image for user {user_id}, mmd_id {mmd_id}, cycle {i}, as {output_filename}")
+                plt.close()
+            except Exception as e:
+                print(f"Error generating scanpath for user {user_id}, mmd_id {mmd_id}: {e}. Skipping this task.")
+                plt.close()
+                continue
 
-    # Create base directories for each label, category, and file type
-    for label in label_columns:
-        for category in categories:
-            for file_type_folder in file_types.values():
-                folder_path = os.path.join(destination_folder, label, category, file_type_folder)
-                os.makedirs(folder_path, exist_ok=True)
-
-    # Iterate over the DataFrame rows
-    for index, row in df.iterrows():
-        uid = row['uid']
-        for label in label_columns:
-            category = 'high' if row[label] == 1 else 'low'
-            for file_name in os.listdir(source_folder):
-                if file_name.startswith(f'{uid}_'):
-                    file_extension = file_name.split('.')[-1]
-                    if file_extension in file_types:
-                        source_file = os.path.join(source_folder, file_name)
-                        file_type_folder = file_types[file_extension]
-                        destination_path = os.path.join(destination_folder, label, category, file_type_folder)
-                        shutil.copy(source_file, destination_path)
-
-    print(f'Files successfully sorted into {destination_folder}')
