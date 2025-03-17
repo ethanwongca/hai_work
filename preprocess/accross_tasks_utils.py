@@ -1,9 +1,10 @@
 # Preprocess Raw Tobii Exports for VTNet_att for the combined MSNV dataset (for accross tasks)
 # Preprocesses without splitting into tasks 
  
- import pandas as pd 
- import re
- import os 
+import pandas as pd 
+import re
+import os 
+import shutil
  
  def cnn_preprocess():
    directories = [
@@ -131,7 +132,36 @@
                print(f"Error processing {f}: {e}")
    
    print("\n Preprocessing complete!")
- 
+
+def sort_files_into_folders(df: pd.DataFrame, source_folder: str, destination_folder: str) -> None:
+    # Define label columns and folder structure
+    label_columns = ['Meara_label', 'BarChartLit_label', 'VerbalWM_label']
+    categories = ['high', 'low']
+    file_types = {'pkl': 'pickle_files', 'png': 'images'}
+
+    # Create base directories for each label, category, and file type
+    for label in label_columns:
+        for category in categories:
+            for file_type_folder in file_types.values():
+                folder_path = os.path.join(destination_folder, label, category, file_type_folder)
+                os.makedirs(folder_path, exist_ok=True)
+
+    # Iterate over the DataFrame rows
+    for index, row in df.iterrows():
+        uid = row['uid']
+        for label in label_columns:
+            category = 'high' if row[label] == 1 else 'low'
+            for file_name in os.listdir(source_folder):
+                if file_name.startswith(f'{uid}_'):
+                    file_extension = file_name.split('.')[-1]
+                    if file_extension in file_types:
+                        source_file = os.path.join(source_folder, file_name)
+                        file_type_folder = file_types[file_extension]
+                        destination_path = os.path.join(destination_folder, label, category, file_type_folder)
+                        shutil.copy(source_file, destination_path)
+
+    print(f'Files successfully sorted into {destination_folder}')
+
  def map_name():
    # Map the name of the .pkl files made from the previous functions
    # Mapping from folder name to the desired prefix.
