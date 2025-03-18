@@ -21,6 +21,8 @@ cd <working_directory>
 source <working_directory>/miniconda3/etc/profile.d/conda.sh
 conda activate vtenv
 
+rm -rf <dataset_name>
+
 # Run your training script (replace with your actual command)
 echo "VTNET_att_1000 Meara Results"
 python vtnet_att_meara.py
