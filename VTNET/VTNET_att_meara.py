@@ -1,4 +1,4 @@
-BASE_DIR = "/ubc/cs/research/ubc_ml/ewong25"
+BASE_DIR = <user>
 
 import os
 import random
