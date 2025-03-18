@@ -15,10 +15,10 @@
 export SHELL=/bin/bash
 
 # Change to your working directory
-cd /ubc/cs/research/ubc_ml/<user_name>
+cd <working_directory>
 
 # Activate conda environment (update the path as necessary)
-source /ubc/cs/research/ubc_ml/<user_name>/miniconda3/etc/profile.d/conda.sh
+source <working_directory>/miniconda3/etc/profile.d/conda.sh
 conda activate vtenv
 
 # Run your training script (replace with your actual command)
