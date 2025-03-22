@@ -491,8 +491,8 @@ def cross_validate( model_type,
                 print("\n Stopped training because {} epochs without improvement. . .".format(patience))
                 break
 
-        y_true = torch.tensor([]).to(device)
-        y_scores = torch.tensor([]).to(device)
+        y_true = torch.tensor([], dtype=torch.long).to(device)
+        y_scores = torch.tensor([], dtype=torch.double).to(device)
         with torch.no_grad():
             model.load_state_dict(torch.load('./best_base_STNet_fold_pd_'+str(k) +'.pt', map_location=device))
             for i, data in enumerate(testloader, 0):
