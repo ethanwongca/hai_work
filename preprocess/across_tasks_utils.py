@@ -1,4 +1,3 @@
-# Process 14 tasks, orders them, and aggregates. 
 import os
 import pandas as pd
 import pickle
@@ -7,7 +6,7 @@ import re
 def extract_user_id(filename):
     """
     Extracts digits from a filename regardless of extension.
-    "msnv1.seg" or "msnv1.tsv" -> 1
+    Example: "msnv1.seg" or "msnv1.tsv" -> 1
     """
     match = re.search(r'(\d+)\.', filename)
     if match:
@@ -41,6 +40,7 @@ def crop_merge_and_cyclic_split_from_seg(seg_directory, raw_directory, output_di
       5. Save each cyclic split as a pickle file.
       6. Save group-level statistics across all users.
     
+    Parameters:
       seg_directory (str): Directory containing segmentation (.seg) files.
       raw_directory (str): Directory containing raw TSV files for each user.
       output_directory (str): Directory where output pickle files and stats will be saved.
@@ -189,7 +189,7 @@ def crop_merge_and_cyclic_split_from_seg(seg_directory, raw_directory, output_di
         # Cyclically split the merged data into 4 groups.
         cyclic_groups = cyclic_split_df(merged_df, n=4)
         for i, cyclic_df in enumerate(cyclic_groups):
-            output_filename = os.path.join(output_directory, f"{prefix}_{user_id}_cyclic_{i}.pkl")
+            output_filename = os.path.join(output_directory, f"{prefix}_{user_id}_{i}.pkl")
             with open(output_filename, 'wb') as f:
                 pickle.dump(cyclic_df, f)
             print(f"Saved cyclic group {i} for user {user_id} as {output_filename}")
@@ -205,7 +205,9 @@ def crop_merge_and_cyclic_split_from_seg(seg_directory, raw_directory, output_di
         pickle.dump(stats_df, f)
     print(f"Saved group-level stats as {stats_filename}")
 
-# For full tasks:
-crop_merge_and_cyclic_split_from_seg('control_segs', 'control/raw_data', 'final_accross_data', mode='29s')
-crop_merge_and_cyclic_split_from_seg('bar_segs', 'adaptive-bar/raw_data', 'final_accross_data', mode='29s')
-crop_merge_and_cyclic_split_from_seg('link_segs', 'adaptive-link/raw_data', 'final_accross_data', mode='29s')
+if __name__ == "__main__":
+    # For full tasks:
+    crop_merge_and_cyclic_split_from_seg('control_segs', 'control/raw_data', 'data_combined', mode='29s')
+    crop_merge_and_cyclic_split_from_seg('bar_segs', 'adaptive-bar/raw_data', 'data_combined', mode='29s')
+    crop_merge_and_cyclic_split_from_seg('link_segs', 'adaptive-link/raw_data', 'data_combined', mode='29s')
+
