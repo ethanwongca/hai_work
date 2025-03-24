@@ -365,15 +365,15 @@ def cross_validate( model_type,
             shutil.copy(src=not_confused_path+i,dst=local_test_not_confused_path+i)
 
         # Prepare training and validation data
-        trainset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset29/augmented_verb/train_cookie_theft'),
+        trainset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset_across/augmented_verb/train_cookie_theft'),
                                                loader=st_pickle_loader,
                                                extensions='.pkl')
 
-        valset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset29/augmented_verb/val_cookie_theft'),
+        valset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset_across/augmented_verb/val_cookie_theft'),
                                                  loader=st_pickle_loader,
                                                  extensions='.pkl')
 
-        testset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset29/augmented_verb/test_cookie_theft'),
+        testset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset_across/augmented_verb/test_cookie_theft'),
                                                  loader=st_pickle_loader,
                                                  extensions='.pkl')
 
