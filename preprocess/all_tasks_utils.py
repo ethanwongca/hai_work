@@ -1,4 +1,4 @@
-# Preprocess Raw Tobii Exports for VTNet_att for the combined MSNV dataset (for accross tasks)
+# Preprocess Raw Tobii Exports for VTNet_att for the combined MSNV dataset all taks without much pre-processing
 # Preprocesses without splitting into tasks 
  
 import pandas as pd 
