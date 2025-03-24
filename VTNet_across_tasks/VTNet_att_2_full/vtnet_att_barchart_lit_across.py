@@ -139,13 +139,13 @@ class VTNet(nn.Module):
         """ Initializes the hidden state with zero tensors.
         """
         if self.rnn_type == 'lstm':
-            return (autograd.Variable(torch.zeros(self.rnn_num_layers, batch_size, self.rnn_hidden_size)).double().to(device),
-                    autograd.Variable(torch.zeros(self.rnn_num_layers, batch_size, self.rnn_hidden_size)).double().to(device))
+            return (autograd.Variable(torch.zeros(self.rnn_num_layers, batch_size, self.rnn_hidden_size)).float().to(device),
+                    autograd.Variable(torch.zeros(self.rnn_num_layers, batch_size, self.rnn_hidden_size)).float().to(device))
         else:
-            return autograd.Variable(torch.zeros(self.rnn_num_layers, batch_size, self.rnn_hidden_size)).double().to(device)
+            return autograd.Variable(torch.zeros(self.rnn_num_layers, batch_size, self.rnn_hidden_size)).float().to(device)
 
 
-def st_pickle_loader(input_file_path, max_length=43756):
+def st_pickle_loader(input_file_path, max_length=35623):
     """ Processes a raw data item into a scan path image and a time series
         for input into a STNet.
 
@@ -390,11 +390,11 @@ def cross_validate( model_type,
 
         torch.manual_seed(MANUAL_SEED)
         if model_type == 'gru':
-            model = VTNet(rnn_type='gru', rnn_num_layers=num_layers, rnn_hidden_size=hidden_size).double().to(device)
+            model = VTNet(rnn_type='gru', rnn_num_layers=num_layers, rnn_hidden_size=hidden_size).float().to(device)
         elif model_type == 'lstm':
-            model = VTNet(rnn_type='lstm', rnn_num_layers=num_layers, rnn_hidden_size=hidden_size).double().to(device)
+            model = VTNet(rnn_type='lstm', rnn_num_layers=num_layers, rnn_hidden_size=hidden_size).float().to(device)
         else:
-            model = VTNet(rnn_type='rnn', rnn_num_layers=num_layers, rnn_hidden_size=hidden_size).double().to(device)
+            model = VTNet(rnn_type='rnn', rnn_num_layers=num_layers, rnn_hidden_size=hidden_size).float().to(device)
 
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
@@ -410,7 +410,7 @@ def cross_validate( model_type,
             for i, data in enumerate(trainloader, 0):
                 # get the inputs; data is a list of [inputs, labels]
                 inputs, labels = data
-                item, item_sp = inputs[0].double(), inputs[1].double()
+                item, item_sp = inputs[0].float(), inputs[1].float()
                 item, item_sp, labels = item.to(device), item_sp[:,0,:,:].unsqueeze(1).to(device), labels.to(device)
 
                 # zero the parameter gradients
@@ -440,7 +440,7 @@ def cross_validate( model_type,
                 for i, data in enumerate(valloader, 0):
                     # get the inputs; data is a list of [inputs, labels]
                     inputs, labels = data
-                    item, item_sp = inputs[0].double(), inputs[1].double()
+                    item, item_sp = inputs[0].float(), inputs[1].float()
                     item, item_sp, labels = item.to(device), item_sp[:,0,:,:].unsqueeze(1).to(device), labels.to(device)
 
                     # zero the parameter gradients
@@ -490,14 +490,14 @@ def cross_validate( model_type,
                 print("\n Stopped training because {} epochs without improvement. . .".format(patience))
                 break
 
-        y_true = torch.tensor([], dtype=torch.long).to(device)
-        y_scores = torch.tensor([], dtype=torch.double).to(device)
+        y_true = torch.tensor([]).to(device)
+        y_scores = torch.tensor([]).to(device)
         with torch.no_grad():
             model.load_state_dict(torch.load('./best_base_STNet_fold_pd_'+str(k) +'.pt', map_location=device))
             for i, data in enumerate(testloader, 0):
                 # get the inputs; data is a list of [inputs, labels]
                 inputs, labels = data
-                item, item_sp = inputs[0].double(), inputs[1].double()
+                item, item_sp = inputs[0].float(), inputs[1].float()
                 item, item_sp, labels = item.to(device), item_sp[:,0,:,:].unsqueeze(1).to(device), labels.to(device)
                 # zero the parameter gradients
                 optimizer.zero_grad()
