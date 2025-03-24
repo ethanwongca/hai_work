@@ -317,12 +317,12 @@ def cross_validate( model_type,
             print("\nTest patient items:\n")
             print(test_confused)
 
-        local_train_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/train_cookie_theft/patient/')
-        local_val_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/val_cookie_theft/patient/')
-        local_test_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/test_cookie_theft/patient/')
-        local_train_not_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/train_cookie_theft/control/')
-        local_val_not_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/val_cookie_theft/control/')
-        local_test_not_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/test_cookie_theft/control/')
+        local_train_confused_path = os.path.join(BASE_DIR, 'dataset_across/augmented_verb/train_cookie_theft/patient/')
+        local_val_confused_path = os.path.join(BASE_DIR, 'dataset_across/augmented_verb/val_cookie_theft/patient/')
+        local_test_confused_path = os.path.join(BASE_DIR, 'dataset_across/augmented_verb/test_cookie_theft/patient/')
+        local_train_not_confused_path = os.path.join(BASE_DIR, 'dataset_across/augmented_verb/train_cookie_theft/control/')
+        local_val_not_confused_path = os.path.join(BASE_DIR, 'dataset_across/augmented_verb/val_cookie_theft/control/')
+        local_test_not_confused_path = os.path.join(BASE_DIR, 'dataset_across/augmented_verb/test_cookie_theft/control/')
 
         # Remove any old directories
         if os.path.exists(local_train_confused_path):
