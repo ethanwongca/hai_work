@@ -317,12 +317,12 @@ def cross_validate( model_type,
             print("\nTest patient items:\n")
             print(test_confused)
 
-        local_train_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/train_cookie_theft/patient/')
-        local_val_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/val_cookie_theft/patient/')
-        local_test_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/test_cookie_theft/patient/')
-        local_train_not_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/train_cookie_theft/control/')
-        local_val_not_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/val_cookie_theft/control/')
-        local_test_not_confused_path = os.path.join(BASE_DIR, 'dataset29/augmented_verb/test_cookie_theft/control/')
+        local_train_confused_path = os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/train_cookie_theft/patient/')
+        local_val_confused_path = os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/val_cookie_theft/patient/')
+        local_test_confused_path = os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/test_cookie_theft/patient/')
+        local_train_not_confused_path = os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/train_cookie_theft/control/')
+        local_val_not_confused_path = os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/val_cookie_theft/control/')
+        local_test_not_confused_path = os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/test_cookie_theft/control/')
 
         # Remove any old directories
         if os.path.exists(local_train_confused_path):
@@ -365,15 +365,15 @@ def cross_validate( model_type,
             shutil.copy(src=not_confused_path+i,dst=local_test_not_confused_path+i)
 
         # Prepare training and validation data
-        trainset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset29/augmented_verb/train_cookie_theft'),
+        trainset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/train_cookie_theft'),
                                                loader=st_pickle_loader,
                                                extensions='.pkl')
 
-        valset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset29/augmented_verb/val_cookie_theft'),
+        valset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/val_cookie_theft'),
                                                  loader=st_pickle_loader,
                                                  extensions='.pkl')
 
-        testset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset29/augmented_verb/test_cookie_theft'),
+        testset = datasets.DatasetFolder(os.path.join(BASE_DIR, 'dataset_across1/augmented_verb/test_cookie_theft'),
                                                  loader=st_pickle_loader,
                                                  extensions='.pkl')
 
