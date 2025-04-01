@@ -215,11 +215,11 @@ def st_pickle_loader(input_file_path, max_length=420):
     category = input_file_path.split(os.sep)[-3]
 
     #check high low
-    path_to_sp = os.path.join(BASE_DIR, "msnv_final_data_tasks", TASK, "high", "images", filename + '.png')
+    path_to_sp = os.path.join(BASE_DIR, "2msnv_tasks_processed_29", TASK, "high", "images", filename + '.png')
 
     # Check if the file exists, if not, try "low"
     if not os.path.exists(path_to_sp):
-        path_to_sp = os.path.join(BASE_DIR, "msnv_final_data_tasks", TASK, "low", "images", filename + '.png')
+        path_to_sp = os.path.join(BASE_DIR, "2msnv_tasks_processed_29", TASK, "low", "images", filename + '.png')
 
     im = Image.open(path_to_sp)
     item_sp = transform(im)[0:3,:,:]
@@ -568,11 +568,11 @@ for i in range(1):
                                                criterion_type='NLLLoss',
                                                optimizer_type='Adam',
                                                confused_path=os.path.join(
-    BASE_DIR, "msnv_final_data_tasks",
+    BASE_DIR, "2msnv_tasks_processed_29",
     TASK, "high/pickle_files/"
 ),
                                                not_confused_path=os.path.join(
-    BASE_DIR, "msnv_final_data_tasks",
+    BASE_DIR, "2msnv_tasks_processed_29",
     TASK, "low/pickle_files/"
 ),
                                                print_every=1,
