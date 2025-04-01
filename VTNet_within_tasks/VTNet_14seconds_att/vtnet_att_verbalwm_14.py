@@ -241,7 +241,7 @@ def cross_validate( model_type,
                     num_layers,
                     down_sample_training=False,
                     learning_rate=0.0001,
-                    path_to_data_split = os.path.join(BASE_DIR, "verbal_wm_tasks.pickle"),
+                    path_to_data_split = os.path.join(BASE_DIR, "2verbalwm.pickle"),
                     verbose=False,
                    patience=3
                   ):
