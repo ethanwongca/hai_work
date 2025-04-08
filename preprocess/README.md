@@ -9,4 +9,3 @@ These modules do the necessary exploratory data analysis and data pre-processing
 
 4. `setup.py`: Sets up the data for VTNet, separates the data into the proper corresponding folders for VTNet and does the 10 CV grouped split.
 
-5. `stats.py`: Calculates the AUC standard deviation and Accuracy standard deviation from the .out file produced from VTNet when training VTNet on a HPC.
