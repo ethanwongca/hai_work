@@ -33,7 +33,7 @@ VTNet/
 ├── vislit.pickle            # Pickle file for grouped CV in classifying visual literacy
 ├── readp.pickle             # Pickle file for grouped CV in classifying reading proficiency
 ├── verbalwm.pickle          # Pickle file for grouped CV in classifying verbal working memory 
-└── vtenv/                   # vtenv environments, one per new length cut-off (ex. vtenv14, vtenv29, etc.)
+└── vtenv/                   # vtenv environments, one per new length cut-off (ex. vtenv14)
     ├── VisLit/
     │   ├── VTNet.py         # VTNet modified to be trained on VisLit 
     │   └── run.sh           # Bash script to execute VTNet for Visual Literacies tasks
