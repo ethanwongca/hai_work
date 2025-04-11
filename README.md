@@ -44,3 +44,18 @@ VTNet/
         ├── VTNet.py         # VTNet modified to be trained on VerbalWM
         └── run.sh           # Bash script to execute VTNet for Verbal Working Memory tasks
 ```
+
+## Environment Setup 
+To setup up the necessary dependencies to use VTNet use the following commands
+### Clone the Repository 
+```
+git clone https://github.com/ethanwongca/hai_work
+```
+### Go into the Cloned Repository 
+```
+cd hai_work 
+```
+### Build the Conda Enviornment 
+```
+conda env create -f environment.yml
+```
