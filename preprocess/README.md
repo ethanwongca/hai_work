@@ -9,3 +9,8 @@ These modules do the necessary exploratory data analysis and data pre-processing
 
 4. `setup.py`: Sets up the data for VTNet, separates the data into the proper corresponding folders for VTNet and does the 10 CV grouped split.
 
+## Validity Module Charts 
+
+In the valdity module you can build validity charts similar to the charts in this paper: **_Further Results on Predicting Cognitive Abilities for Adaptive Visualizations_ (Conati et al. 2017)** 
+
+![download](https://github.com/user-attachments/assets/8fc09d90-32a0-46a0-9adc-f85d5528a4d2)
