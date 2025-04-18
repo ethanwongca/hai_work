@@ -9,7 +9,7 @@ These modules do the necessary exploratory data analysis and data pre-processing
 
 4. `setup.py`: Sets up the data for VTNet, separates the data into the proper corresponding folders for VTNet and does the 10 CV grouped split.
 
-> **Note:** Every function below includes a comprehensive document string parameters, return values, and usage examples, so you can read straight in the code for full details.
+> **Note:** Every function below includes a comprehensive document string parameters, return values, and how to use, so you can read straight in the code for full details.
 
 ## Validity Module Charts 
 
