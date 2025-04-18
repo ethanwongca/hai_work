@@ -17,6 +17,14 @@
 
 All of UBC's labs have their own separate clusters, please check this documentation to use the appropriate allocation code and insert that code in `slurm_template.sh`: [UBC HPC Allocation Codes](https://github.com/plai-group/cluster-docs/wiki/UBC-ML-Cluster)
 
+## Accessing UBC's HPC
+
+Follow the commands below to access the HPC 
+```bash
+ssh <username>@remote.cs.ubc.ca
+ssh submit-ml
+```
+
 ## Post-HPC Workflow 
 Once SLURM jobs have finished:
 1. Run stats.py with the SLURM-generated output file to get the AUC standard deviation and accuracy.
