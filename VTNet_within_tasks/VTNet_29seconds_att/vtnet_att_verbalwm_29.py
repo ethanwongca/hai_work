@@ -215,11 +215,11 @@ def st_pickle_loader(input_file_path, max_length=870):
     category = input_file_path.split(os.sep)[-3]
 
     #check high low
-    path_to_sp = os.path.join(BASE_DIR, "msnv_final_data_tasks", TASK, "high", "images", filename + '.png')
+    path_to_sp = os.path.join(BASE_DIR, "2msnv_tasks_processed_29", TASK, "high", "images", filename + '.png')
 
     # Check if the file exists, if not, try "low"
     if not os.path.exists(path_to_sp):
-        path_to_sp = os.path.join(BASE_DIR, "msnv_final_data_tasks", TASK, "low", "images", filename + '.png')
+        path_to_sp = os.path.join(BASE_DIR, "2msnv_tasks_processed_29", TASK, "low", "images", filename + '.png')
 
     im = Image.open(path_to_sp)
     item_sp = transform(im)[0:3,:,:]
@@ -241,7 +241,7 @@ def cross_validate( model_type,
                     num_layers,
                     down_sample_training=False,
                     learning_rate=0.0001,
-                    path_to_data_split = os.path.join(BASE_DIR, "verbal_wm_tasks.pickle"),
+                    path_to_data_split = os.path.join(BASE_DIR, "2verbalwm.pickle"),
                     verbose=False,
                    patience=3
                   ):
@@ -568,11 +568,11 @@ for i in range(1):
                                                criterion_type='NLLLoss',
                                                optimizer_type='Adam',
                                                confused_path=os.path.join(
-    BASE_DIR, "msnv_final_data_tasks",
+    BASE_DIR, "2msnv_tasks_processed_29",
     TASK, "high/pickle_files/"
 ),
                                                not_confused_path=os.path.join(
-    BASE_DIR, "msnv_final_data_tasks",
+    BASE_DIR, "2msnv_tasks_processed_29",
     TASK, "low/pickle_files/"
 ),
                                                print_every=1,
