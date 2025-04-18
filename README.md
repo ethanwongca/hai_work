@@ -1,8 +1,8 @@
-# Human AI-Interaction Work
+# Human Artificial Intelligence Interaction 
 
-This repository contains all the code developedand documentation written during my directed studies on Human-AI Interaction. The code is organized into several directories, each addressing different aspects of the project.
+This repository contains all the code developed and documentation written during my directed studies on Human-AI Interaction. The code is organized into several directories, each addressing different aspects of the project.
 
-## Directory Structure
+## Directory Overview
 
 ### 1. `preprocessing`
 This folder includes all the functions and scripts used to transform raw Tobii data, sampling at 120 Hz, into the necessary inputs for VTNet. It covers:
@@ -24,7 +24,7 @@ This folder holds various implementations of VTNet for the within-task dataset (
 This folder contains the VTNet implementations for the across-task dataset. 
 
 ### 5. `Workflow`
-This folder contains documentation of how to go from the lab server to running VTNet in no time
+This folder contains documentation of how to go from the lab server to running VTNet in no time.
 
 ## VTNet Suggested Directory Structure Setup (HPC)
 Although there are many possible directory structure setups that can be used for VTNet here is the structure I found most effective and organized:
