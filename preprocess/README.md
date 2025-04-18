@@ -1,5 +1,5 @@
 # Pre-Processing Modules
-These modules do the necessary exploratory data analysis and data pre-processing to train VTNet (A RNN-CNN model specializing in Eye-Tracking data). 
+These modules do the necessary exploratory data analysis and data pre-processing to train VTNet (A RNN-CNN model specializing in Eye-Tracking data). <br/>
 
 1. `tasks.py`: Separates raw Tobii data into the 14 tasks needed in the study. It prepares the data for validity.py to run a validity analysis on the tasks. 
 
@@ -8,6 +8,8 @@ These modules do the necessary exploratory data analysis and data pre-processing
 3. `input.py`: Cyclic splits the tasks that meet our validity and sequence length threshold. Creates 4x the amount of data points. Also generates the scanpaths of each task that meet the threshold. 
 
 4. `setup.py`: Sets up the data for VTNet, separates the data into the proper corresponding folders for VTNet and does the 10 CV grouped split.
+
+> **Note:** Every function below includes a comprehensive document string parameters, return values, and usage examples, so you can read straight in the code for full details.
 
 ## Validity Module Charts 
 
