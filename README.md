@@ -1,4 +1,4 @@
-# Human Artificial Intelligence Interaction 
+# Human Artificial Intelligence Interaction <img height=50 width=40 src="https://github.com/user-attachments/assets/235fba2a-59e6-4092-8068-b6306fb6e993">
 
 This repository contains all the code developed and documentation written during my directed studies on Human-AI Interaction. The code is organized into several directories, each addressing different aspects of the project.
 
