@@ -2,14 +2,12 @@
 
 This folder explains how to pull the raw MSNV UBC Study 2 data from the lab server and prepare it for VTNet.
 
----
 
 ## 5.1 Prerequisites
 
 - **SSH access** to UBC lab server (`remote.cs.ubc.ca`)  
 - **UBC credentials** with read permissions on `/ubc/cs/research/conati/ATUAV/`  
 
----
 
 ## 5.2 Accessing the Lab Server
 
@@ -17,7 +15,6 @@ This folder explains how to pull the raw MSNV UBC Study 2 data from the lab ser
 ssh <username>@remote.cs.ubc.ca
 cd /ubc/cs/research/conati/ATUAV/
 ```
----
 
 ## 5.3 Locating the MSNV Data
 On the server, the raw files live here:
