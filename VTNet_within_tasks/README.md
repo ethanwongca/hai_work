@@ -11,6 +11,9 @@ Each directory contains three VTNet implementations, each designed for a differe
 - **`VTNet_29seconds_att`**  
   Contains VTNet models configured with a 29-second cutoff, suitable for intermediate long-term cognitive evaluations.
 
+- **`VTNet_29seconds_withoutatt`**  
+  Contains VTNet models configured with a 29-second cutoff without attention, suitable for intermediate long-term cognitive evaluations.
+
 Each directory has separate VTNet implementations dedicated to modeling specific long-term cognitive abilities.
 
 To Understand VTNet Read: **_A Neural Architecture for Detecting User Confusion in Eye-tracking Data_** and **_Classification of Alzheimers Disease with Deep Learning on Eye-tracking Data_**
