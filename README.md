@@ -23,8 +23,8 @@ This folder holds various implementations of VTNet for the within-task dataset (
 ### 4. `VTNet_across_tasks`
 This folder contains the VTNet implementations for the across-task dataset. 
 
-### 5. `Workflow`
-This folder contains documentation of how to go from the lab server to running VTNet in no time.
+### 5. `Dataset`
+This folder contains documentation to find the proper files within the lab repository.
 
 ## VTNet Suggested Directory Structure Setup (HPC)
 Although there are many possible directory structure setups that can be used for VTNet here is the structure I found most effective and organized:
