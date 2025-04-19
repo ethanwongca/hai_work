@@ -8,7 +8,7 @@ This repository contains all the code developed and documentation written during
 ### 1. `Dataset`
 This [folder](./Dataset/) contains **documentation** on where to find the proper files within the lab repository.
 
-### 2. `preprocessing`
+### 2. `preprocess`
 This [folder](./preprocess/) includes all the functions and scripts used to transform raw Tobii data, sampling at 120 Hz, into the necessary inputs for VTNet. It covers:
 - **Data Preprocessing:** Routines for cleaning and formatting raw data.
 - **Exploratory Data Analysis (EDA):** Functions for visualizing and understanding the data.
