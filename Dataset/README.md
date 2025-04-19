@@ -39,7 +39,7 @@ To find the segmentation files and raw tobii exports for the control dataset:
 └── User Studies/
     └── MSNV UBC Study 1/
         └── Raw Experiment Data/
-            └── Tobii Export/ # Folder contrains Dataset "Control" and .seg file folder
+            └── Tobii Export/ # Folder contains Dataset "Control" and .seg file folder
                 └── Segs/ # *.seg files for each task
 ```
 To find the classification of long-term cognitive ability per task:
@@ -68,7 +68,7 @@ get -r 'Adapt Bar/MSNV Bar Tobii Exports/*'
 ## 5.4 Running Preprocessing 
 Now that your raw data is local, run the functions within the preprocessing directory in this repository to clean the data for VTNet. <br/>
 
-You can also do your own preprocessing, but note for the RNN component for VTnet it takes these columns from the raw Tobii data. 
+You can also do your own preprocessing but note that the RNN component for VTnet takes these columns from the raw Tobii data. 
 ## 5.5 Running Preprocessing
 
 Once the raw files are local, you can:
