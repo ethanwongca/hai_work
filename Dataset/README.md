@@ -1,22 +1,22 @@
-# 5. Dataset
+# 1. Dataset
 
 This folder explains how to pull the raw MSNV UBC Study 2 data from the lab server and prepare it for VTNet.
 
 
-## 5.1 Prerequisites
+## 1.1 Prerequisites
 
 - **SSH access** to UBC lab server (`remote.cs.ubc.ca`)  
 - **UBC credentials** with read permissions on `/ubc/cs/research/conati/ATUAV/`  
 
 
-## 5.2 Accessing the Lab Server
+## 1.2 Accessing the Lab Server
 Log in and navigate to the project root:
 ```bash
 ssh <username>@remote.cs.ubc.ca
 cd /ubc/cs/research/conati/ATUAV/
 ```
 
-## 5.3 Locating the MSNV Data
+## 1.3 Locating the MSNV Data
 To find the segmentation files and raw tobii exports for the adaptive and link dataset:
 ```
 /ubc/cs/research/conati/ATUAV/
@@ -65,11 +65,11 @@ get -r 'Adapt Bar/MSNV Bar Tobii Exports/*'
 # (repeat for Adapt Link and Control)
 ```
 
-## 5.4 Running Preprocessing 
+## 1.4 Running Preprocessing 
 Now that your raw data is local, run the functions within the preprocessing directory in this repository to clean the data for VTNet. <br/>
 
 You can also do your own preprocessing but note that the RNN component for VTnet takes these columns from the raw Tobii data. 
-## 5.5 Running Preprocessing
+## 1.5 Running Preprocessing
 
 Once the raw files are local, you can:
 
