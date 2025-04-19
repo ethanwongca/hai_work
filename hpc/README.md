@@ -8,7 +8,7 @@
 
 1. Insert information in slurm_template.sh
 2. Run the command `sbatch slurm_template.sh` or whatever set file name your slurm script is 
-3. Check if script is running via `squeue -u $USER`
+3. Check if the script is running via `squeue -u $USER`
 4. Once the files are complete SLURM will generate an output file: `<file_name>.out` 
 
 **For more info:** https://docs.alliancecan.ca/wiki/Running_jobs 
