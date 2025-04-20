@@ -65,11 +65,7 @@ get -r 'Adapt Bar/MSNV Bar Tobii Exports/*'
 # (repeat for Adapt Link and Control)
 ```
 
-## 1.4 Running Preprocessing 
-Now that your raw data is local, run the functions within the preprocessing directory in this repository to clean the data for VTNet. <br/>
-
-You can also do your own preprocessing but note that the RNN component for VTnet takes these columns from the raw Tobii data. 
-## 1.5 Running Preprocessing
+## 1.4 Running Preprocessing
 
 Once the raw files are local, you can:
 
