@@ -16,7 +16,41 @@ random.seed(MANUAL_SEED)
 np.random.seed(MANUAL_SEED)
 
 def sort_files_into_folders(df: pd.DataFrame, source_folder: str, destination_folder: str) -> None:
-    # Define label columns and folder structure
+    """
+    Sorts and copies files from a source directory into a structured set of
+    subdirectories based on label columns in a DataFrame.
+
+    For each row in `df`, this function looks for files in `source_folder`
+    whose names start with the row’s `uid` followed by an underscore. It
+    determines the category for each label column (`high` if the label is 1,
+    otherwise `low`), and copies matching files into:
+        destination_folder/
+            <label_column>/
+                <category>/  # "high" or "low"
+                    pickle_files/  # for `.pkl` files
+                    images/        # for `.png` files
+
+    Args:
+        df (pd.DataFrame): DataFrame containing at least the columns
+            'uid', 'Meara_label', 'BarChartLit_label', and 'VerbalWM_label'.
+            Each label column should contain binary values (1 or 0).
+        source_folder (str): Path to the directory where the original files
+            are stored. Files must be named with the pattern
+            "<uid>_<anything>.<extension>".
+        destination_folder (str): Path to the directory where the sorted
+            files will be placed. Subdirectories will be created if they do
+            not already exist.
+
+    Side Effects:
+        - Creates a folder hierarchy under `destination_folder` for each
+          label and category.
+        - Copies `.pkl` files into `pickle_files` and `.png` files into
+          `images` within the corresponding label/category folders.
+        - Prints a confirmation message upon completion.
+
+    Returns:
+        None
+    """
     label_columns = ['Meara_label', 'BarChartLit_label', 'VerbalWM_label']
     categories = ['high', 'low']
     file_types = {'pkl': 'pickle_files', 'png': 'images'}
