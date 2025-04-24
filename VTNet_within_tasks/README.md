@@ -1,4 +1,7 @@
 # VTNet Within Tasks
+
+## Directory Structure
+
 Each directory contains three VTNet implementations, each designed for a different long-term cognitive ability. The directories included are:
 - **`VTNet_1000_att`**  
   Contains VTNet models designed for tasks requiring prolonged attention over 1000 sequences.
@@ -11,10 +14,10 @@ Each directory contains three VTNet implementations, each designed for a differe
 
 Each directory has separate VTNet implementations dedicated to modeling specific long-term cognitive abilities.
 
-# VTNet Modifications 
+## VTNet Modifications 
 The following parameters need to be modified in VTNet when running a new experiment:
 
-## 1. Base Directory
+### 1. Base Directory
 Replace the BASE_DIR with your own base directory where `utils.py` and `.pickle` files are located:
 
 ```python
@@ -24,7 +27,7 @@ BASE_DIR = "/ubc/cs/research/ubc_ml/ewong25"
 
 See the VTNet recommended structure for guidance on directory organization.
 
-## 2. Attention Layers
+### 2. Attention Layers
 The attention mechanism is implemented with these lines:
 
 ```python
@@ -37,7 +40,7 @@ x2, * = self.multihead_attn1(x2, x2, x2, need_weights=False)
 
 To create a non-attention VTNet variant, comment out both of these lines.
 
-## 3. Sequence Length Configuration
+### 3. Sequence Length Configuration
 In the `st_pickle_loader` function, modify the default `max_length` parameter to match your desired sequence type for cyclic splitting:
 
 ```python
@@ -59,7 +62,7 @@ For cyclic splitting, calculate the max_length as `(seconds * sampling_rate) / 4
 - `max_length=420` for 14-second experiments (14 * 120 / 4)
 - `max_length=870` for 29-second experiments (29 * 120 / 4)
 
-## 4. Data Split Path
+### 4. Data Split Path
 In the `cross_validate` function, update the path to your generated pickle file:
 
 ```python
@@ -84,7 +87,7 @@ def cross_validate(
 
 Replace the `path_to_data_split` parameter with the path to your own .pickle file generated via the 10-fold cross-validation grouped function in the preprocessing code.
 
-## 5. Preprocessed Dataset Folder
+### 5. Preprocessed Dataset Folder
 Update the paths to match your preprocessed dataset folder structure:
 
 ```python
@@ -97,7 +100,7 @@ if not os.path.exists(path_to_sp):
 
 Replace `"2msnv_tasks_processed_29"` with the name of your preprocessed dataset folder created during preprocessing.
 
-## 6. Task Name Configuration
+### 6. Task Name Configuration
 Set the appropriate task name variable based on the long-term cognitive state being modeled:
 
 ```python
