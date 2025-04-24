@@ -21,11 +21,11 @@ This [folder](./hpc/) contains resources and **documentation** for high-performa
 - **Statistics Script:** A script to compute the standard deviation of the AUC (Area Under the Curve) and accuracy metrics from VTNet's output file.
 
 ### 4. `VTNet_within_tasks`
-This [folder](./VTNet_within_tasks/) holds various implementations of VTNet for the within-task dataset (14 seconds, 29 seconds, and sequence length at 1000).  
+This [folder](./VTNet_within_tasks/) holds various implementations of VTNet for the within-task dataset (14 seconds, 29 seconds, and sequence length at 1000) and contains **documentation** on the modifications VTNet needs when running experiments.  
 **Note:** The `st_pickle_loader` function’s `max_length` parameter is critical—it adjusts VTNet for different sequence lengths (e.g., 1000 to 3000).
 
 ### 5. `VTNet_across_tasks`
-This [folder](./VTNet_across_tasks/) contains the VTNet implementations for the across-task dataset. 
+This [folder](./VTNet_across_tasks/) contains the VTNet implementations for the across-task dataset and contains **documentation** on the modifications VTNet needs when running experiments.
 
 ## VTNet Suggested Directory Structure Setup (HPC)
 Although many possible directory structure setups can be used for VTNet here is the structure I found most effective:
