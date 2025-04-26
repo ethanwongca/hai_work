@@ -32,10 +32,11 @@ Implementations of VTNet for the within-task dataset:
 - 📄 Documentation on required VTNet modifications
 - ⚠️ **Important**: The `st_pickle_loader` function's `max_length` parameter is critical for adjusting sequence lengths
 
-### [`VTNet_across_tasks`](./VTNet_across_tasks/)
-VTNet implementations for the across-task dataset:
+### [`VTNet_User_Aggregate`](./VTNet_across_tasks/)
+VTNet implementations for the evaluating per user VTNet dataset:
 - 🔄 Cross-task prediction configurations
 - 📄 Documentation on required model modifications
+- 📝 The extra preprocessing done to make the within-tasks dataset to per user
 
 ## 🛠️ Recommended Directory Structure for VTNet (HPC)
 
