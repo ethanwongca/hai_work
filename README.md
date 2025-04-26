@@ -1,4 +1,4 @@
-# Human-AI Interaction: Eye-Tracking Analysis with VTNet <img height=50 width=50 src="https://github.com/user-attachments/assets/a47c4f55-2fe8-458c-b356-2b6b61e12008">
+# Human-AI Interaction: Eye-Tracking Analysis with VTNet 
 
 This repository contains code and documentation from research on Human-AI Interaction, focusing on eye-tracking data analysis using VTNet. T
 
