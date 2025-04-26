@@ -1,13 +1,13 @@
 # Human-AI Interaction: Eye-Tracking Analysis with VTNet <img height=50 width=50 src="https://github.com/user-attachments/assets/a47c4f55-2fe8-458c-b356-2b6b61e12008">
 
-This repository contains code and documentation from research on Human-AI Interaction, focusing on eye-tracking data analysis using VTNet (Visuospatial-Temporal Network). The work explores how eye movement patterns can predict cognitive abilities across different tasks.
+This repository contains code and documentation from research on Human-AI Interaction, focusing on eye-tracking data analysis using VTNet. T
 
 ### Key Features
 
 - **Eye-tracking Data Processing**: Transform raw Tobii data (120 Hz) into VTNet-compatible formats
-- **Cognitive Ability Classification**: Models for visual literacy, reading proficiency, and verbal working memory
 - **Cross-validation Frameworks**: Specialized CV approaches for different classification scenarios
 - **HPC Integration**: Ready-to-use scripts for high-performance computing environments
+- **Documentation**: Documents what files to look for in the lab server, how to use VTNet, HPCs, and more
 
 ## 📁 Repository Structure
 
