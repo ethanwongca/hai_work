@@ -130,7 +130,7 @@ scancel <job_id>
 
 Once SLURM jobs have finished:
 
-Run stats.py with the SLURM-generated output file to get the AUC standard deviation and accuracy.
+Run stats.py with the SLURM-generated output file to get AUC's and accuracy's standard deviation.
 
 
 ## Transferring Files To/From HPC
