@@ -1,34 +1,47 @@
-# Human Artificial Intelligence Interaction <img height=50 width=50 src="https://github.com/user-attachments/assets/a47c4f55-2fe8-458c-b356-2b6b61e12008">
+# Human-AI Interaction: Eye-Tracking Analysis with VTNet <img height=50 width=50 src="https://github.com/user-attachments/assets/a47c4f55-2fe8-458c-b356-2b6b61e12008">
 
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 
-This repository contains all the code developed and documentation written during my directed studies on Human-AI Interaction. The code is organized into several directories, each addressing different aspects of the project.
+This repository contains code and documentation from research on Human-AI Interaction, focusing on eye-tracking data analysis using VTNet (Visuospatial-Temporal Network). The work explores how eye movement patterns can predict cognitive abilities across different tasks.
 
-## Directory Overview
+### Key Features
 
-### 1. `Dataset`
-This [folder](./Dataset/) contains **documentation** on where to find the proper files within the lab repository.
+- **Eye-tracking Data Processing**: Transform raw Tobii data (120 Hz) into VTNet-compatible formats
+- **Cognitive Ability Classification**: Models for visual literacy, reading proficiency, and verbal working memory
+- **Cross-validation Frameworks**: Specialized CV approaches for different classification scenarios
+- **HPC Integration**: Ready-to-use scripts for high-performance computing environments
 
-### 2. `preprocess`
-This [folder](./preprocess/) includes all the functions and scripts used to transform raw Tobii data, sampling at 120 Hz, into the necessary inputs for VTNet. It covers:
-- **Data Preprocessing:** Routines for cleaning and formatting raw data.
-- **Exploratory Data Analysis (EDA):** Functions for visualizing and understanding the data.
-- **Dataset Construction:** Scripts to build the within-task dataset.
-- **Utility Functions:** Including scanpath extraction and cyclic splitting functions.
+## 📁 Repository Structure
 
-### 3. `hpc`
-This [folder](./hpc/) contains resources and **documentation** for high-performance computing, including:
-- **Slurm Template:** A template for running jobs on the `ubc_ml` cluster.
-- **Statistics Script:** A script to compute the standard deviation of the AUC (Area Under the Curve) and accuracy metrics from VTNet's output file.
+### [`Dataset`](./Dataset/)
+Contains documentation on locating the necessary data files within the lab repository.
 
-### 4. `VTNet_within_tasks`
-This [folder](./VTNet_within_tasks/) holds various implementations of VTNet for the within-task dataset (14 seconds, 29 seconds, and sequence length at 1000) and contains **documentation** on the modifications VTNet needs when running experiments.  
-**Note:** The `st_pickle_loader` function’s `max_length` parameter is critical—it adjusts VTNet for different sequence lengths (e.g., 1000 to 3000).
+### [`preprocess`](./preprocess/) 
+Tools for transforming raw eye-tracking data:
+- 🧹 **Data Cleaning & Formatting**: Scripts to clean and standardize raw Tobii data
+- 📊 **Exploratory Data Analysis**: Functions for visualizing and understanding eye-tracking patterns
+- 🏗️ **Dataset Construction**: Tools for building within-task and across-task datasets
+- 🛠️ **Utility Functions**: Including scanpath extraction and cyclic data splitting
 
-### 5. `VTNet_across_tasks`
-This [folder](./VTNet_across_tasks/) contains the VTNet implementations for the across-task dataset and contains **documentation** on the modifications VTNet needs when running experiments.
+### [`hpc`](./hpc/)
+Resources for high-performance computing:
+- 📝 **Slurm Templates**: Ready-to-use templates for the `ubc_ml` cluster
+- 📈 **Statistical Analysis**: Scripts for computing performance metrics from VTNet outputs
 
-## VTNet Suggested Directory Structure Setup (HPC)
-Although many possible directory structure setups can be used for VTNet here is the structure I found most effective:
+### [`VTNet_within_tasks`](./VTNet_within_tasks/)
+Implementations of VTNet for the within-task dataset:
+- ⏱️ Multiple sequence length configurations (14s, 29s, and length 1000)
+- 📄 Documentation on required VTNet modifications
+- ⚠️ **Important**: The `st_pickle_loader` function's `max_length` parameter is critical for adjusting sequence lengths
+
+### [`VTNet_across_tasks`](./VTNet_across_tasks/)
+VTNet implementations for the across-task dataset:
+- 🔄 Cross-task prediction configurations
+- 📄 Documentation on required model modifications
+
+## 🛠️ Recommended Directory Structure for VTNet (HPC)
+
+While multiple directory structures are possible, here is our recommended setup:
 
 ```
 VTNet/
@@ -49,26 +62,50 @@ VTNet/
         └── run.sh           # Bash script to execute VTNet for Verbal Working Memory tasks
 ```
 
-## Environment Setup 
-To set up the necessary dependencies to use VTNet use the following commands
-### Clone the Repository 
-```
-git clone https://github.com/ethanwongca/hai_work
-```
-### Go into the Cloned Repository 
-```
-cd hai_work 
-```
-### Build the Conda Environment 
-```
-conda env create -f environment.yml
-```
+## 🚀 Getting Started
 
-## References
-These papers are good to read to understand VTNet: 
-- Barral, O., Lallé, S., Guz, G., Iranpour, A., & Conati, C. (2020). Eye‑tracking to predict user cognitive abilities and performance for user‑adaptive narrative visualizations. *In Proceedings of the 2020 International Conference on Multimodal Interaction* (pp. 163–173). Association for Computing Machinery. https://doi.org/10.1145/3382507.3418884
+### Prerequisites
+- Python 3.8 or higher
+- Conda (for environment setup)
 
-- Sims, S. D., & Conati, C. (2020). A neural architecture for detecting user confusion in eye‑tracking data. *In Proceedings of the 2020 International Conference on Multimodal Interaction* (pp. 15–23). Association for Computing Machinery. https://doi.org/10.1145/3382507.3418828
+### Installation
 
-- Sriram, H., Conati, C., & Field, T. (2023). Classification of Alzheimer’s disease with deep learning on eye‑tracking data. *In Proceedings of the 25th International Conference on Multimodal Interaction* (pp. 104–113). Association for Computing Machinery. https://doi.org/10.1145/3577190.3614149
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ethanwongca/hai_work
+   ```
+
+2. **Navigate to the project directory**
+   ```bash
+   cd hai_work
+   ```
+
+3. **Create and activate the Conda environment**
+   ```bash
+   conda env create -f environment.yml
+   conda activate hai-env
+   ```
+
+## 📚 Key Concepts
+
+### VTNet Architecture
+VTNet is a neural architecture that processes eye-tracking data to predict user confusion and Alzheimer disease. It transforms sequential eye movement data into features useful for classification tasks.
+
+### Sequence Length Configuration
+When using VTNet, pay attention to the `max_length` parameter in the `st_pickle_loader` function. This parameter adjusts the model for different sequence lengths (e.g., from 1000 to 3000).
+
+## 📖 References
+
+For a deeper understanding of the methods used in this repository, we recommend these papers:
+
+- Barral, O., Lallé, S., Guz, G., Iranpour, A., & Conati, C. (2020). [Eye‑tracking to predict user cognitive abilities and performance for user‑adaptive narrative visualizations](https://doi.org/10.1145/3382507.3418884). *In Proceedings of the 2020 International Conference on Multimodal Interaction* (pp. 163–173).
+
+- Sims, S. D., & Conati, C. (2020). [A neural architecture for detecting user confusion in eye‑tracking data](https://doi.org/10.1145/3382507.3418828). *In Proceedings of the 2020 International Conference on Multimodal Interaction* (pp. 15–23).
+
+- Sriram, H., Conati, C., & Field, T. (2023). [Classification of Alzheimer's disease with deep learning on eye‑tracking data](https://doi.org/10.1145/3577190.3614149). *In Proceedings of the 25th International Conference on Multimodal Interaction* (pp. 104–113).
+
+
+## 🤝 Acknowledgments
+
+- UBC's Human Artificial Intelligence Interaction Lab
 
