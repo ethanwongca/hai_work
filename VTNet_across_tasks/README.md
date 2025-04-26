@@ -1,16 +1,19 @@
-# VTNet Across Tasks
+# VTNet User Aggregate
+
+This repository contains VTNet implementations for modeling user-level cognitive abilities across multiple tasks by aggregating each user’s data into a single sequence. It provides tools for preprocessing, training, and evaluating VTNet variants on per-user aggregated datasets.
+
 
 ## Directory Structure
-
-This section contains VTNet implementations for modeling cognitive abilities across multiple tasks performed by users. The directories included are:
-
 - **`VTNet_att_1_full`**  
   Contains VTNet models trained on all tasks performed by a user.
 
 - **`VTNet_att_2_full`**  
   Contains VTNet models trained on a subset of tasks (e.g., 14 tasks) performed by a user.
 
-Each directory includes independent VTNet implementations dedicated to modeling specific long-term cognitive abilities across tasks.
+- **`per_user_aggregate_preprocess.py`**
+  Preprocessing scripts that aggregate trial-level data into per-user sequences for VTNet input.
+
+Each directory contains an independent VTNet implementation dedicated to modeling stable, long-term cognitive traits across users.
 
 ## VTNet Modifications 
 The following parameters need to be modified in VTNet when running a new experiment:
