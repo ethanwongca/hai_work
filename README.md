@@ -1,7 +1,5 @@
 # Human-AI Interaction: Eye-Tracking Analysis with VTNet <img height=50 width=50 src="https://github.com/user-attachments/assets/a47c4f55-2fe8-458c-b356-2b6b61e12008">
 
-![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-
 This repository contains code and documentation from research on Human-AI Interaction, focusing on eye-tracking data analysis using VTNet (Visuospatial-Temporal Network). The work explores how eye movement patterns can predict cognitive abilities across different tasks.
 
 ### Key Features
